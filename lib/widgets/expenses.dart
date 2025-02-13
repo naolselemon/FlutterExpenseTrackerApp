@@ -1,7 +1,8 @@
-import "package:expense_tracker/widgets/expenses_list/expenses_list.dart";
 import "package:flutter/material.dart";
 
 import "package:expense_tracker/models/expenses.dart";
+import "package:expense_tracker/widgets/expenses_list/expenses_list.dart";
+import "package:expense_tracker/widgets/new_expense.dart";
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -28,14 +29,15 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddNewExpenseOverlay() {
     showModalBottomSheet(
-        context: context, builder: (ctx) => const Text("Model bottom sheet"));
+        context: context, builder: (ctx) => const NewExpense());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 251, 242, 242),
         appBar: AppBar(
-          title: const Text("MoneyWise-ExpensesTracker"),
+          title: const Text("ExpensesTracker"),
           actions: [
             IconButton(
                 onPressed: _openAddNewExpenseOverlay,
