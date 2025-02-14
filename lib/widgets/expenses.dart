@@ -77,7 +77,6 @@ class _ExpensesState extends State<Expenses> {
     }
 
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 231, 242, 246),
         appBar: AppBar(
           title: const Text("ExpenseTracker"),
           actions: [
@@ -87,10 +86,7 @@ class _ExpensesState extends State<Expenses> {
           ],
         ),
         body: Column(
-          children: [
-            const Text("Chart"),
-            Expanded(child: Center(child: mainContent))
-          ],
+          children: [const Text("Chart"), Expanded(child: mainContent)],
         ));
   }
 }
