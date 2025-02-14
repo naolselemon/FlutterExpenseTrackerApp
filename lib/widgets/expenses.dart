@@ -29,15 +29,57 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddNewExpenseOverlay() {
     showModalBottomSheet(
-        context: context, builder: (ctx) => const NewExpense());
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => NewExpense(
+              onAddExpense: addNewExpense,
+            ));
+  }
+
+  void addNewExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense) {
+    var expenseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+
+    // snackbar to notify the user about the deletion
+    //ScaffoldMessenger.of(context).showSnackBar() -- used to display the snackbar object
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text("Expense deleted"),
+      duration: const Duration(seconds: 2),
+      action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          }),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+        child: Text("No expenses available. Please add some expense! "));
+
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 251, 242, 242),
+        backgroundColor: const Color.fromARGB(255, 231, 242, 246),
         appBar: AppBar(
-          title: const Text("ExpensesTracker"),
+          title: const Text("ExpenseTracker"),
           actions: [
             IconButton(
                 onPressed: _openAddNewExpenseOverlay,
@@ -47,7 +89,7 @@ class _ExpensesState extends State<Expenses> {
         body: Column(
           children: [
             const Text("Chart"),
-            ExpensesList(expenses: _registeredExpenses)
+            Expanded(child: Center(child: mainContent))
           ],
         ));
   }
