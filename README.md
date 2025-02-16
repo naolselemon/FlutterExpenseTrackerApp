@@ -4,8 +4,8 @@
 A simple flutter app to track daily expenses, manage budgets, and gain insights into spending habits.
 
 ## 📸 Screenshots
-![](assets/images/home.jpg width="200")
-![](assets/images/new_expenses.jpg width="200")
+![](assets/images/home.png width="200")
+
 
 ## 🚀 Features
 - Add and delete expenses
